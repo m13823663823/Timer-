@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body{
+        background-color: #000;
+    }
+</style>
+<body>
+    <canvas width="500" height="500"></canvas>
+    <script>
+        const cv = document.querySelector("canvas")
+        const c = cv.getContext("2d")
+        c.lineWidth = 17
+        c.strokeStyle = "#00ffff"
+        c.shadowBlur = 15
+        c.shadowColor = "#00ffff"
+        const start  = 270*Math.PI/180
+            function f() {
+                const now = new Date()
+                const date = now.toDateString()
+                const time = now.toLocaleTimeString()
+                let hrs = now.getHours()
+                const minus = now.getMinutes()
+                const seconds = now.getSeconds()
+                const msec = now.getMilliseconds()
+                const mss = seconds + (msec / 1000)
+                const mins = minus + (mss / 1000)
+                let rg = c.createRadialGradient(250, 250, 5, 250, 250, 300)
+                rg.addColorStop(0, "#03303a")
+                rg.addColorStop(1, "black")
+                c.fillStyle = rg
+                c.fillRect(0, 0, 500, 500)
+                c.beginPath()
+
+                if(hrs == 12){
+                    c.arc(250, 250, 190, start, (15 - 90) * Math.PI / 180)
+                    c.stroke()
+                    c.beginPath()
+                }else {
+                    c.arc(250, 250, 190, start, (hrs * 30 - 90) * Math.PI / 180)
+                    c.stroke()
+                    c.beginPath()
+                }
+                c.arc(250,250,130,start,(mss*6-90)*Math.PI/180)
+                c.stroke()
+                c.beginPath()
+                c.arc(250,250,160,start,(mins*6-90)*Math.PI/180)
+                c.stroke()
+                c.beginPath()
+
+                c.font = "25px 微软雅黑";
+                c.fillStyle = "#00ffff";
+                c.fillText(date,150,240)
+                c.beginPath()
+                c.font = "25px 微软雅黑";
+                c.fillStyle = "#00ffff";
+                c.fillText(`${time}:${msec}`,160,285)
+                requestAnimationFrame(f)
+            }
+                f()
+    </script>
+</body>
+</html>
